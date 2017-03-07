@@ -16,23 +16,16 @@ export default class Home extends Component {
 	}
 
 
-	fetchWeatherData = () => {
-		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.wunderground.com/api/ab4553ed5fce2e14/conditions/q/UK/London.json";
-		//fetch API
-		$.getJSON(
-			url,
-			parseResponse = (parsed_json) => {
-				var location = parsed_json['location']['city'];
-				var temp_c = parsed_json['current_observation']['temp_c'];
-				// set states for fields so they could be rendered later on
-				this.setState({
-					locate: location,
-					temp: temp_c
-				});
-			}
-		)
-	}
+	componentWillMount = () => {
+var url = "http://api.wunderground.com/api/7785277273971137/geolookup/conditions/forecast/q/UK/London.json";
+//fetch API
+$.ajax({
+            url: url,
+            dataType: "jsonp",
+            success: this.parseResponse,
+            error: function(req, err) { console.log('API call failed ' + err); }
+        })
+}
 
 	render() {
 			//const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
@@ -48,13 +41,13 @@ export default class Home extends Component {
 											<Searchbox />
 										</div>
 										<div class = {style.forecast}>
-											<Greeting />
+											<Greeting temp = {this.state.temp}/>
 											<Weatherbar />
 										</div>
 									</li>
 
 									<li>
-										<div class = {style.dailyweekly}>
+										<div class = {style.dailyweekly }>
 											<div class = {style.daily}>
 												<Daily />
 											</div>
@@ -70,6 +63,22 @@ export default class Home extends Component {
 
 		);
 	}
+
+parseResponse = (parsed_json) => {
+		var city = parsed_json['current_observation']['display_location']['city'];
+		var country = parsed_json['current_observation']['display_location']['country'];
+		var temp_c = parsed_json['current_observation']['temp_c'];
+		var conditions = parsed_json['current_observation']['weather'];
+
+		console.log("Success");
+		// set the states for fields so they could be rendered later on with all the datas saved into states.
+		this.setState({
+					currentCity: city,
+					currentCountry: country,
+					temp: temp_c,
+					cond: conditions
+		});
+}
 
 
 }
