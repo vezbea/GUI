@@ -19,6 +19,14 @@ export default class Daily extends Component {
         var hr6 = parsed_json['hourly_forecast'][5]['FCTTIME']['hour_padded'];
         var hr7 = parsed_json['hourly_forecast'][6]['FCTTIME']['hour_padded'];
 
+        var temp1 = parsed_json['hourly_forecast'][0]['temp']['metric'];
+        var temp2 = parsed_json['hourly_forecast'][1]['temp']['metric'];
+        var temp3 = parsed_json['hourly_forecast'][2]['temp']['metric'];
+        var temp4 = parsed_json['hourly_forecast'][3]['temp']['metric'];
+        var temp5 = parsed_json['hourly_forecast'][4]['temp']['metric'];
+        var temp6 = parsed_json['hourly_forecast'][5]['temp']['metric'];
+        var temp7 = parsed_json['hourly_forecast'][6]['temp']['metric'];
+
     		console.log("Success");
     		// set the states for fields so they could be rendered later on with all the datas saved into states.
     		this.setState({
@@ -29,6 +37,14 @@ export default class Daily extends Component {
               hour5 : hr5,
               hour6 : hr6,
               hour7 : hr7,
+
+              t1 : temp1,
+              t2 : temp2,
+              t3 : temp3,
+              t4 : temp4,
+              t5 : temp5,
+              t6 : temp6,
+              t7 : temp7,
     		});
     }
 
@@ -57,13 +73,13 @@ export default class Daily extends Component {
                     <th> {this.state.hour7}:00 </th>
                 </tr>
                 <tr>
-                    <td> 7°C </td>
-                    <td> 6°C </td>
-                    <td> 4°C </td>
-                    <td> 4°C </td>
-                    <td> 2°C </td>
-                    <td> 3°C </td>
-                    <td> 4°C </td>
+                    <td> {this.state.t1}°C </td>
+                    <td> {this.state.t2}°C </td>
+                    <td> {this.state.t3}°C </td>
+                    <td> {this.state.t4}°C </td>
+                    <td> {this.state.t5}°C </td>
+                    <td> {this.state.t6}°C </td>
+                    <td> {this.state.t7}°C </td>
                 </tr>
             </table>
             </div>
